@@ -31,6 +31,10 @@
           </li>
         </ul>
       </div>
+    <% else %>
+      <div class="menu-container">
+        <%= link_to 'GitHubでログイン', "/auth/github", method: :post %>
+      </div>
     <% end %>
     <%= yield %>
   </body>
