@@ -14,7 +14,7 @@
 
 <p>
   <strong><%= User.human_attribute_name(:icon) %>:</strong>
-  <%= image_tag @user.icon if @user.icon.present? %>
+  <%= image_tag @user.icon.variant(resize: "100x100") if @user.icon.present? %>
 
 </p>
 
