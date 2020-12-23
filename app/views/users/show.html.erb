@@ -35,6 +35,11 @@
   <% end %>
 </p>
 
+<p>
+  <%= render 'follow_form' %>
+  <%= render 'stats' %>
+</p>
+
 <% if current_user == @user %>
   <%= link_to t('views.common.edit'), edit_user_registration_path %> |
 <% end %>
