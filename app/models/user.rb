@@ -14,7 +14,7 @@ class User < ApplicationRecord
                                     foreign_key: 'followed_id',
                                     dependent: :destroy,
                                     inverse_of: :followed
-  has_many :following, through: :following_relationships, source: :followed
+  has_many :followings, through: :following_relationships, source: :followed
   has_many :followers, through: :follower_relationships, source: :following
 
   validates :uid, uniqueness: { scope: :provider }, if: -> { uid.present? }
@@ -28,7 +28,7 @@ class User < ApplicationRecord
   end
 
   def follow(other_user)
-    following << other_user
+    followings << other_user
   end
 
   def unfollow(other_user)
@@ -36,6 +36,6 @@ class User < ApplicationRecord
   end
 
   def following?(other_user)
-    following.include?(other_user)
+    followings.include?(other_user)
   end
 end

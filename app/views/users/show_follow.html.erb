@@ -9,7 +9,7 @@
   </thead>
 
   <tbody>
-  <% @user.following.each do |user| %>
+  <% @user.followings.each do |user| %>
     <tr>
       <th>
         <% if user.avatar.attached? %>
