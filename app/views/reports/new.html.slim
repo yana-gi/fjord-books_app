@@ -1,4 +1,4 @@
 h1
-  | New Report
+  = t('views.common.title_new', name: Report.model_name.human)
 = render 'form', report: @report
-= link_to 'Back', reports_path
+= link_to t('views.common.back'), reports_path

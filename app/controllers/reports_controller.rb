@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       if @report.save
-        format.html { redirect_to @report, notice: 'Report was successfully created.' }
+        format.html { redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human) }
       else
         format.html { render :new }
       end
@@ -38,7 +38,7 @@ class ReportsController < ApplicationController
   def update
     respond_to do |format|
       if @report.update(report_params)
-        format.html { redirect_to @report, notice: 'Report was successfully updated.' }
+        format.html { redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human) }
        else
         format.html { render :edit }
        end
