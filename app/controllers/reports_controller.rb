@@ -23,8 +23,7 @@ class ReportsController < ApplicationController
 
   # POST /reports
   def create
-    @user = current_user
-    @report = @user.reports.new(report_params)
+    @report = current_user.reports.new(report_params)
 
     respond_to do |format|
       if @report.save
@@ -38,10 +37,10 @@ class ReportsController < ApplicationController
   # PATCH/PUT /reports/1
   def update
     respond_to do |format|
-      if @report.update(report_params)
+      if current_user.reports.exists?(@report.id) && @report.update(report_params)
         format.html { redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human) }
        else
-        format.html { render :edit }
+         format.html { render :edit }
        end
     end
   end
@@ -49,21 +48,22 @@ class ReportsController < ApplicationController
   # DELETE /reports/1
   # DELETE /reports/1.json
   def destroy
-    @report.destroy
-    respond_to do |format|
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.reports.exists?(@report.id) && @report.destroy!
+      respond_to do |format|
+        format.html { redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human) }
+      end
     end
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
-    def set_report
-      @report = Report.find(params[:id])
-    end
+  def set_report
+    @report = Report.find(params[:id])
+  end
 
     # Only allow a list of trusted parameters through.
-    def report_params
-      params.require(:report).permit(:title, :text)
-    end
+  def report_params
+    params.require(:report).permit(:title, :text)
+  end
 end
