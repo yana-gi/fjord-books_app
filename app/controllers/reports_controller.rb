@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.all
+    @reports = Report.includes(:user).order(:created_at).all
   end
 
   # GET /reports/1
@@ -37,7 +37,7 @@ class ReportsController < ApplicationController
   # PATCH/PUT /reports/1
   def update
     respond_to do |format|
-      if current_user.reports.exists?(@report.id) && @report.update(report_params)
+      if @report.user == current_user && @report.update(report_params)
         format.html { redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human) }
        else
          format.html { render :edit }
@@ -48,7 +48,7 @@ class ReportsController < ApplicationController
   # DELETE /reports/1
   # DELETE /reports/1.json
   def destroy
-    if current_user.reports.exists?(@report.id) && @report.destroy!
+    if @report.user == current_user && @report.destroy!
       respond_to do |format|
         format.html { redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human) }
       end
