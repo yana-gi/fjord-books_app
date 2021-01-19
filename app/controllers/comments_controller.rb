@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_report
+  before_action :set_commentable
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments
@@ -25,9 +25,9 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = @report.comments.build(comment_params)
+    @comment = @commentable.comments.build(comment_params)
     @comment.save
-    redirect_to @report, notice: t('controllers.common.notice_create', name: Comment.model_name.human)
+    redirect_to @commentable, notice: t('controllers.common.notice_create', name: Comment.model_name.human)
   end
 
   # PATCH/PUT /comments/1
@@ -52,8 +52,9 @@ class CommentsController < ApplicationController
   end
 
   private
-  def set_report
-    @report = Report.find(params[:report_id])
+  def set_commentable
+    resource, id = request.path.split('/')[1,2]
+    @commentable = resource.singularize.classify.constantize.find(id)
   end
 
   def set_comment

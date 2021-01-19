@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[show edit update destroy]
+  before_action :set_commentable, only: :show
 
   # GET /reports
   # GET /reports.json
@@ -10,8 +11,8 @@ class ReportsController < ApplicationController
   # GET /reports/1
   # GET /reports/1.json
   def show
-    @comments = @report.comments.includes(:user).all
-    @comment = @report.comments.build(user_id: current_user.id)
+    @comments = @commentable.comments.includes(:user).all
+    @comment = @commentable.comments.build(user_id: current_user.id)
   end
 
   # GET /reports/new
@@ -52,6 +53,10 @@ class ReportsController < ApplicationController
   end
 
   private
+  def set_commentable
+    resource, id = request.path.split('/')[1,2]
+    @commentable = resource.singularize.classify.constantize.find(id)
+  end
 
     # Use callbacks to share common setup or constraints between actions.
   def set_report
