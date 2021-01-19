@@ -12,6 +12,9 @@ p
     = Report.human_attribute_name(:text)
     | :
   = @report.text
+
+= render 'comments/body'
+
 - if @report.user == current_user
   = link_to t('views.common.edit'), edit_report_path(@report)
   |  |
