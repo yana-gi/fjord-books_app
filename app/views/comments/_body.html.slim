@@ -15,5 +15,5 @@ h2
     strong
       = Comment.human_attribute_name(:created_at)
       | :
-    = comment.created_at
+    = l comment.created_at, format: :long
 = render 'comments/form'
