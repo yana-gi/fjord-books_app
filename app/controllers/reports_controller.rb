@@ -27,9 +27,13 @@ class ReportsController < ApplicationController
   # POST /reports
   def create
     @report = current_user.reports.new(report_params)
-    @report.save
-    redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
-  end
+    if @report.save
+      flash[:notice] = t('controllers.common.notice_create', name: Report.model_name.human)
+    else
+      flash[:alert] = 'レポートの作成に失敗しました'
+    end
+    redirect_to @commentable
+    end
 
   # PATCH/PUT /reports/1
   def update

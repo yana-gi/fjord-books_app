@@ -26,8 +26,12 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = @commentable.comments.build(comment_params)
-    @comment.save
-    redirect_to @commentable, notice: t('controllers.common.notice_create', name: Comment.model_name.human)
+    if @comment.save
+      flash[:notice] = t('controllers.common.notice_create', name: Comment.model_name.human)
+    else
+      flash[:alert] = 'コメントの作成に失敗しました'
+    end
+    redirect_to @commentable
   end
 
   # PATCH/PUT /comments/1
