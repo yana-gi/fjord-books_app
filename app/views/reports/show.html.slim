@@ -13,7 +13,7 @@ p
     | :
   = @report.text
 
-= render 'comments/body'
+= render 'comments/comments'
 
 - if @report.user == current_user
   = link_to t('views.common.edit'), edit_report_path(@report)
