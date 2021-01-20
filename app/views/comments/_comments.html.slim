@@ -1,19 +1,23 @@
 h2
   = Comment.model_name.human
-- @comments.each do |comment|
-  div
+- if @comments.present?
+  - @comments.each do |comment|
+    div
+      p
+        strong
+          = User.human_attribute_name(:name)
+          | :
+        = comment.user.name
+      p
+        strong
+          = Comment.human_attribute_name(:body)
+          | :
+        = comment.body
+      p
+        strong
+          = Comment.human_attribute_name(:created_at)
+          | :
+        = l comment.created_at, format: :long
+- else
     p
-      strong
-        = User.human_attribute_name(:name)
-        | :
-      = comment.user.name
-    p
-      strong
-        = Comment.human_attribute_name(:body)
-        | :
-      = comment.body
-    p
-      strong
-        = Comment.human_attribute_name(:created_at)
-        | :
-      = l comment.created_at, format: :long
+      = t('.notice')
