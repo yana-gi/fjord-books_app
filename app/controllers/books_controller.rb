@@ -2,7 +2,6 @@
 
 class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
-  before_action :set_commentable, only: :show
 
   # GET /books
   # GET /books.json
@@ -13,8 +12,8 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
-    @comments = @commentable.comments.includes(:user).all
-    @comment = @commentable.comments.build(user_id: current_user.id)
+    @comments = @book.comments.includes(:user).all
+    @comment = @book.comments.build(user_id: current_user.id)
   end
 
   # GET /books/new
@@ -66,11 +65,6 @@ class BooksController < ApplicationController
   end
 
   private
-  def set_commentable
-    resource, id = request.path.split('/')[1,2]
-    @commentable = resource.singularize.classify.constantize.find(id)
-  end
-
   # Use callbacks to share common setup or constraints between actions.
   def set_book
     @book = Book.find(params[:id])
