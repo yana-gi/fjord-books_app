@@ -5,6 +5,7 @@ class CreateReports < ActiveRecord::Migration[6.0]
     create_table :reports do |t|
       t.string :title
       t.text :text
+      t.references :user, null: false, foreign_key: true, default: ''
 
       t.timestamps
     end
