@@ -27,35 +27,31 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.new(report_params)
     if @report.save
-      flash[:notice] = t('controllers.common.notice_create', name: Report.model_name.human)
+      redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
     else
-      flash[:alert] = 'レポートの作成に失敗しました'
+      render :new
     end
-    redirect_to @report
-    end
+  end
 
   # PATCH/PUT /reports/1
   def update
-    # respond_to do |format|
-    #   if @report.user == current_user && @report.update(report_params)
-    #     format.html { redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human) }
-    #    else
-    #      format.html { render :edit }
-    #    end
-    # end
+    if @report.user == current_user && @report.update(report_params)
+      redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
+    else
+      render :edit
+    end
   end
 
   # DELETE /reports/1
   # DELETE /reports/1.json
   def destroy
-    # if @report.user == current_user && @report.destroy!
-    #   respond_to do |format|
-    #     format.html { redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human) }
-    #   end
-    # end
+    if @report.user == current_user && @report.destroy!
+      redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human)
+    end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_report
     @report = Report.find(params[:id])
