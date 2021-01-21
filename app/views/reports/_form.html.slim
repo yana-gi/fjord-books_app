@@ -10,9 +10,9 @@
             = message
   .field
     = form.label :title
-    = form.text_field :title
+    = form.text_field :title, required: true
   .field
     = form.label :text
-    = form.text_area :text
+    = form.text_area :text, required: true
   .actions
     = form.submit
