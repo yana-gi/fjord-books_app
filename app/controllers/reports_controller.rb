@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[show edit update destroy]
-  1
+
   # GET /reports
   # GET /reports.json
   def index
@@ -20,8 +22,7 @@ class ReportsController < ApplicationController
   end
 
   # GET /reports/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /reports
   def create
@@ -45,18 +46,17 @@ class ReportsController < ApplicationController
   # DELETE /reports/1
   # DELETE /reports/1.json
   def destroy
-    if @report.user == current_user && @report.destroy!
-      redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human)
-    end
+    redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human) if @report.user == current_user && @report.destroy!
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_report
     @report = Report.find(params[:id])
   end
 
-    # Only allow a list of trusted parameters through.
+  # Only allow a list of trusted parameters through.
   def report_params
     params.require(:report).permit(:title, :text)
   end

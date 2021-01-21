@@ -70,7 +70,7 @@ gem 'image_processing', '~> 1.2'
 gem 'omniauth'
 gem 'omniauth-github'
 
-gem 'slim-rails'
 gem 'html2slim'
+gem 'slim-rails'
 
 gem 'bullet'
