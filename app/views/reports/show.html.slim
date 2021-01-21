@@ -4,6 +4,11 @@ h1
   = t('views.common.title_show', name: Report.model_name.human)
 p
   strong
+    = User.human_attribute_name(:name)
+    | :
+  = @report.user.name.present? ? @report.user.name : @report.user.email
+p
+  strong
     = Report.human_attribute_name(:title)
     | :
   = @report.title
@@ -12,6 +17,11 @@ p
     = Report.human_attribute_name(:text)
     | :
   = @report.text
+p
+  strong
+    = Report.human_attribute_name(:created_at)
+    | :
+  = l @report.created_at, format: :long
 
 = render 'comments/comments'
 = render 'comments/form', { commentable: @report, comment: @comment }

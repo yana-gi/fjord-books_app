@@ -16,7 +16,7 @@ table
         td
           = report.title
         td
-          = report.user.name
+          = report.user.name.present? ? report.user.name : report.user.email
         td
           = link_to t('views.common.show'), report
         - if report.user == current_user

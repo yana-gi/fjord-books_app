@@ -7,7 +7,7 @@ h2
         strong
           = User.human_attribute_name(:name)
           | :
-        = comment.user.name
+        = comment.user.name.present? ? comment.user.name : comment.user.email
       p
         strong
           = Comment.human_attribute_name(:body)
