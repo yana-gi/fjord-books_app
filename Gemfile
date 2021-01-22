@@ -69,3 +69,7 @@ gem 'kaminari'
 gem 'image_processing', '~> 1.2'
 gem 'omniauth'
 gem 'omniauth-github'
+
+gem 'html2slim'
+gem 'slim-rails'
+
