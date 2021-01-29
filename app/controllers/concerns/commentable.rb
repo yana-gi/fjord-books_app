@@ -2,7 +2,7 @@
 
 module Commentable
   def set_comments
-    @comments = resource.comments.includes(:user).all
+    @comments = resource.comments.eager_load(:user).all
   end
 
   def build_comment

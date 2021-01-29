@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
 
   # GET /reports
   def index
-    @reports = Report.includes(:user).order(:created_at).all
+    @reports = Report.eager_load(:user).order(:created_at).all
   end
 
   # GET /reports/1
