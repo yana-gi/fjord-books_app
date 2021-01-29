@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class BooksController < ApplicationController
+  include Commentable
+
   before_action :set_book, only: %i[show edit update destroy]
+  before_action :set_comments, only: %i[show]
+  before_action :build_comment, only: %i[show]
 
   # GET /books
   # GET /books.json
@@ -11,10 +15,7 @@ class BooksController < ApplicationController
 
   # GET /books/1
   # GET /books/1.json
-  def show
-    @comments = @book.comments.includes(:user).all
-    @comment = @book.comments.build(user_id: current_user.id)
-  end
+  def show; end
 
   # GET /books/new
   def new
@@ -65,6 +66,10 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def resource
+    @book
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_book

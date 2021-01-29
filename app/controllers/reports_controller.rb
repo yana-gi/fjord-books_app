@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ReportsController < ApplicationController
+  include Commentable
+
   before_action :set_report, only: %i[show edit update destroy]
+  before_action :set_comments, only: %i[show]
+  before_action :build_comment, only: %i[show]
 
   # GET /reports
   def index
@@ -9,10 +13,7 @@ class ReportsController < ApplicationController
   end
 
   # GET /reports/1
-  def show
-    @comments = @report.comments.includes(:user).all
-    @comment = @report.comments.build(user_id: current_user.id)
-  end
+  def show; end
 
   # GET /reports/new
   def new
@@ -47,6 +48,10 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def resource
+    @report
+  end
 
   def set_report
     @report = Report.find(params[:id])
