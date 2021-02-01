@@ -73,3 +73,4 @@ gem 'omniauth-github'
 gem 'html2slim'
 gem 'slim-rails'
 
+gem 'bullet'
