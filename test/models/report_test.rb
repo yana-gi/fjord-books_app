@@ -32,6 +32,5 @@ class ReportTest < ActiveSupport::TestCase
     alice_report = reports(:alice_report)
 
     assert_equal alice_report.created_at.to_date, alice_report.created_on
-    # assert_equal '2021-02-01 10:00:00'.to_date, alice_report.created_on
   end
 end
