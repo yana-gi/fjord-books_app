@@ -13,6 +13,8 @@ class ReportsTest < ApplicationSystemTestCase
   test 'visiting the index' do
     visit reports_url
     assert_selector 'h1', text: '日報'
+    assert_text "Today's Report"
+    assert_text 'alice'
   end
 
   test 'creating a report' do
@@ -24,17 +26,25 @@ class ReportsTest < ApplicationSystemTestCase
     click_on '登録する'
 
     assert_text '日報が作成されました。'
+    assert_text "Yesterday's Report"
+    assert_text 'Yesterday was a good day!'
   end
 
   test 'updating a report' do
-    visit reports_url
+    visit report_url(reports(:alice_report).id)
+
+    assert_text "Today's Report"
+    assert_text 'Today was a good day!'
+
     click_on '編集'
 
-    fill_in '内容', with: 'Today was a good day!'
+    fill_in 'タイトル', with: "Yesterday's Report"
+    fill_in '内容', with: 'Yesterday was a good day!'
     click_on '更新'
 
     assert_text '日報が更新されました'
-    click_on '戻る'
+    assert_text "Yesterday's Report"
+    assert_text 'Yesterday was a good day!'
   end
 
   test 'destroying a report' do
